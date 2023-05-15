@@ -1,5 +1,5 @@
 import { exec } from 'child_process'
-import { xml2js } from './xml2js/xml2js'
+import { eo2js } from './eo2js'
 
 const getXmlAst = (filepath: string): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -12,5 +12,9 @@ const getXmlAst = (filepath: string): Promise<string> => {
   })
 }
 
-const xml = await getXmlAst('test.eo')
-await xml2js(xml)
+const main = async () => {
+  const xml = await getXmlAst('test.eo')
+  await eo2js(xml)
+}
+
+main()
