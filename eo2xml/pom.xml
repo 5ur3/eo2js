@@ -44,9 +44,6 @@
                 </executions>
                 <configuration>
                     <mainClass>org.example.App</mainClass>
-                    <!-- <arguments> -->
-<!--                        <argument>/Users/murashko/Desktop/eo2xml/src/main/java/org/example/foo.eo</argument>
-                    </arguments> -->
                 </configuration>
             </plugin>
         </plugins>
