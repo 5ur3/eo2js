@@ -14,7 +14,7 @@ const getXmlAst = (filepath: string): Promise<string> => {
 
 const main = async () => {
   const xml = await getXmlAst('test.eo')
-  await eo2js(xml)
+  console.log(await eo2js(xml))
 }
 
 main()
