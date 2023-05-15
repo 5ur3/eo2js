@@ -13,6 +13,7 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+// mvn -q exec:java > outt.txt
 
 public class App {
     public static void main(String[] args) throws IOException {
