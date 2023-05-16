@@ -9,4 +9,20 @@ const org = () => ({
   })
 })
 
-const five = () => org().eolang().int(5)
+const four = () => ({
+  ...org().eolang().int(4)
+})
+
+const five = () => ({
+  ...org().eolang().int(5),
+  prev: () => ({
+    ...four()
+  }),
+  next: () => ({
+    ...org().eolang().int(6)
+  })
+})
+
+console.log(five().prev().$_datarize())
+console.log(five().$_datarize())
+console.log(five().next().$_datarize())
