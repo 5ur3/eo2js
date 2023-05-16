@@ -1,5 +1,9 @@
-4 > four
-
 5 > five
-  four > prev
-  6 > next
+7 > seven
+
+five.add > sum
+  seven
+  5 > first
+  seven > second
+
+sum.second > app

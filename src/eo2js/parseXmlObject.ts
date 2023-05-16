@@ -1,6 +1,4 @@
 import { ParsedObject, ParsedObjectType } from './ParsedObject'
-import {eo2js} from "./index";
-import {parseString} from "xml2js";
 
 export const parseXmlObject = (object: any): ParsedObject => {
   const baseObject = {
@@ -11,7 +9,7 @@ export const parseXmlObject = (object: any): ParsedObject => {
     return {
       type: ParsedObjectType.closed,
       base: object['$'].base,
-      value: parseValue(object['$'].base, object['_']),
+      value: object['_'] ? parseValue(object['$'].base, object['_']).toString() : undefined,
       ...baseObject
     }
   } else if (object['$'].abstract === '') {
@@ -29,28 +27,22 @@ export const parseXmlObject = (object: any): ParsedObject => {
   }
 }
 
-const parseValue = (base: string, value: string) => {
+const parseValue = (base: string, value: string): number | string | boolean => {
   switch (base) {
-    case 'org.eolang.float':
+    case 'float':
       const hexValues = value.split(' ');
       const uint8Array = new Uint8Array(hexValues.map(hex => parseInt(hex, 16)));
       const dataView = new DataView(uint8Array.buffer);
 
-      return dataView.getFloat64(0).toString();
+      return dataView.getFloat64(0)
 
-    case 'org.eolang.int':
-      return parseInt(value.replace(/ /g, ''), 16).toString()
+    case 'int':
+      return parseInt(value.replace(/ /g, ''), 16)
 
-    case 'org.eolang.string':
+    case 'string':
       return value.split(' ').map(hex => String.fromCharCode(parseInt(hex, 16))).join('');
 
-    case 'org.eolang.true':
-      return "true"
-
-    case 'org.eolang.false':
-      return "false"
-
     default:
-      return ""
+      return ''
   }
 }

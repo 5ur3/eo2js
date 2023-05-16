@@ -6,7 +6,7 @@ export enum ParsedObjectType {
 
 interface AbstractParsedObject {
   type: ParsedObjectType.abstract
-  args: ParsedObject[]
+  args: (BaseParsedObject & AliasParsedObject)[]
 }
 
 interface CopiedParsedObject {
@@ -22,7 +22,7 @@ interface AliasParsedObject {
 
 interface BaseParsedObject {
   name?: string
-  children: ParsedObject[]
+  children: (BaseParsedObject & (AbstractParsedObject | CopiedParsedObject))[]
 }
 
 export type ParsedObject = BaseParsedObject &
