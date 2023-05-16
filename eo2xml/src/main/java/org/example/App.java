@@ -32,8 +32,7 @@ public class App {
         ).parse();
 
         XML xmir = new XMLDocument(baos.toByteArray());
-        XML after = new Xsline(new ParsingTrain()).pass(xmir);
 
-        System.out.println(after.toString());
+        System.out.println(xmir.toString());
     }
 }
