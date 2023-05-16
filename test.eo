@@ -1,8 +1,1 @@
-[n @] > entry
-  n > name
-
-entry.attr1.attr2.attr3 > a
-  "title"
-  "PROGRAM"
-
-a.name
+5 > five
