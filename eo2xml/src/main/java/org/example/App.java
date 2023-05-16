@@ -3,6 +3,7 @@ package org.example;
 import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XML;
 import com.yegor256.xsline.Xsline;
+import com.yegor256.xsline.TrClasspath;
 import org.eolang.parser.ParsingTrain;
 import org.eolang.parser.Syntax;
 import org.cactoos.io.InputOf;
