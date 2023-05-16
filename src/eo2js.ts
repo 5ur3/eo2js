@@ -1,8 +1,9 @@
 import { parseXml } from './parseXml'
+import * as fs from 'fs'
 
 enum ParsedObjectType {
   abstract = 'abstract',
-  copied = 'copied',
+  closed = 'closed',
   alias = 'alias'
 }
 
@@ -12,13 +13,14 @@ interface AbstractParsedObject {
 }
 
 interface CopiedParsedObject {
-  type: ParsedObjectType.copied
+  type: ParsedObjectType.closed
   base: string
   value?: string
 }
 
 interface AliasParsedObject {
   type: ParsedObjectType.alias
+  isList?: boolean
 }
 
 interface BaseParsedObject {
@@ -36,7 +38,7 @@ const convertXmlObject = (object: any): ParsedObject => {
   }
   if (object['$'].base) {
     return {
-      type: ParsedObjectType.copied,
+      type: ParsedObjectType.closed,
       base: object['$'].base,
       value: object['_'],
       ...baseObject
@@ -50,6 +52,7 @@ const convertXmlObject = (object: any): ParsedObject => {
   } else {
     return {
       type: ParsedObjectType.alias,
+      isList: object['$'].vararg === '' ? true : undefined,
       ...baseObject
     }
   }
@@ -71,7 +74,7 @@ const buildObject = (xmlObject: any): ParsedObject => {
     }
   }
 
-  if (base.type === ParsedObjectType.copied && base.base.charAt(0) == '.') {
+  if (base.type === ParsedObjectType.closed && base.base.charAt(0) == '.') {
     base.base = children[0].base + base.base
     childrenStartIndex = 1
   }
@@ -86,6 +89,10 @@ const buildObject = (xmlObject: any): ParsedObject => {
 export const eo2js = async (xml: string) => {
   const program = (await parseXml(xml)).program
   const objects = program.objects[0].o
+  const parsedObjects = objects.map(o => buildObject(o))
 
-  return objects.map(o => buildObject(o))
+  fs.writeFileSync('xml.json', JSON.stringify(objects))
+  fs.writeFileSync('object.json', JSON.stringify(parsedObjects))
+
+  return parsedObjects
 }
