@@ -40,9 +40,8 @@ const representObject = (object: ParsedObject): string => {
 }
 
 const makeBaseCall = (object: ParsedObject & { type: ParsedObjectType.closed }): string => {
-  const args = object.children.filter(child => !child.name)
-
   if (!object.value) {
+    const args = object.children.filter(child => !child.name)
     return `${object.base.replace(/\./g, '().')}(${args.map(representObject)})`
   }
 

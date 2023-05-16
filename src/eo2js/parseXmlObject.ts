@@ -8,7 +8,7 @@ export const parseXmlObject = (object: any): ParsedObject => {
   if (object['$'].base) {
     return {
       type: ParsedObjectType.closed,
-      base: object['$'].base,
+      base: convertBase(object['$'].base),
       value: object['_'] ? parseValue(object['$'].base, object['_']).toString() : undefined,
       ...baseObject
     }
@@ -44,5 +44,18 @@ const parseValue = (base: string, value: string): number | string | boolean => {
 
     default:
       return ''
+  }
+}
+
+const convertBase = (base: string) => {
+  switch (base) {
+    case 'true':
+      return 'boolTrue'
+
+    case 'false':
+      return 'boolFalse'
+
+    default:
+      return base
   }
 }
