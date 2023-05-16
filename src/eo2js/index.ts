@@ -7,8 +7,6 @@ export const eo2js = async (xml: string) => {
   const program = (await parseXml(xml)).program
   const objects = program.objects[0].o
   const parsedObjects = objects.map(o => buildParsedObject(o))
-
   const jsObjects = parsedObjects.map(o => buildJsObject(o))
-
   return makeJsScript(jsObjects)
 }
