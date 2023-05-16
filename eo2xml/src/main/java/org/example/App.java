@@ -32,7 +32,13 @@ public class App {
         ).parse();
 
         XML xmir = new XMLDocument(baos.toByteArray());
+        XML after = new Xsline(
+                new TrClasspath<>(
+                        new ParsingTrain().empty(),
+                        "/org/eolang/parser/wrap-method-calls.xsl"
+                ).back()
+        ).pass(xmir);
 
-        System.out.println(xmir.toString());
+        System.out.println(after.toString());
     }
 }
