@@ -1,5 +1,7 @@
 import { exec } from 'child_process'
 import { eo2js } from './eo2js'
+import * as process from 'process'
+import * as fs from 'fs'
 
 const getXmlAst = (filepath: string): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -13,8 +15,15 @@ const getXmlAst = (filepath: string): Promise<string> => {
 }
 
 const main = async () => {
-  const xml = await getXmlAst('test.eo')
-  console.log(await eo2js(xml))
+  const eoFilepath = process.argv[2]
+  const xml = await getXmlAst(eoFilepath)
+
+  let outputFilepath = `${eoFilepath}.js`
+  if (eoFilepath.endsWith('.eo')) {
+    outputFilepath = `${eoFilepath.slice(0, -3)}.js`
+  }
+
+  fs.writeFileSync(outputFilepath, await eo2js(xml))
 }
 
 main()
