@@ -115,58 +115,6 @@ $ ts-node src/index.ts test.eo && node test.js
 -----
 **EOLANG code #2**
 ```eolang
-false > first
-first.or true > second
-
-[] > ifExample
-  second.if "yes" "no" > @
-
-ifExample > app
-```
-
-<details>
-<summary> JS generated `code` </summary>
-
-```
-const {int, float, boolTrue, boolFalse, string, seq} = require('./eolib')
-
-const first = () => ({
-    ...boolFalse()
-})
-
-const second = () => ({
-    ...first().or(() => ({
-        ...boolTrue()
-    }))
-})
-
-const ifExample = () => ({
-    ...(() => ({
-        ...second().if(() => ({
-            ...string("yes")
-        }), () => ({
-            ...string("no")
-        }))
-    }))()
-})
-
-const app = () => ({
-    ...ifExample()
-})
-
-console.log(app().$_datarize())
-```
-</details>
-
-**Output**
-```
-$ ts-node src/index.ts test.eo && node test.js                                                                                       5s 04:52:34
-yes
-```
-
-----
-**EOLANG code #3**
-```eolang
 5 > five
   $.add > doubled
     $
@@ -210,7 +158,7 @@ $ ts-node src/index.ts test.eo && node test.js                                  
 ```
 
 ----
-**EOLANG code #4**
+**EOLANG code #3**
 ```eolang
 "Seven plus two is " > beginning
 7.add 2 > sevenPlusTwo
