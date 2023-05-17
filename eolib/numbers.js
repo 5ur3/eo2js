@@ -2,7 +2,7 @@ const { bool } = require ( './booleans' )
 
 const num = (value) => ({
   $_value: () => value,
-  $_datarize: () => value.toString(),
+  $_datarize: () => value,
 
   add: (obj) => num(value + obj().$_value()),
   sub: (obj) => num(value - obj().$_value()),
