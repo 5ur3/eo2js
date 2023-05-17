@@ -51,3 +51,221 @@ We have made an analogue to https://github.com/objectionary/eo2py transpiler. Bu
     - .length
     - .add
 - seq
+
+## Examples:
+
+-----
+**EOLANG code #1**
+```eolang
+[t @] > tagged
+  t > tag
+
+[] > five
+  tagged > @
+    "five"
+    5
+
+seq > app
+  five
+  five.tag
+```
+
+<details>
+<summary> JS generated `code` </summary>
+
+```
+const {int, float, boolTrue, boolFalse, string, seq} = require('./eolib')
+
+const tagged = (t, _decoratee) => ({
+  ...(() => ({
+    ..._decoratee()
+  }))(),
+  tag: () => ({
+    ...t()
+  })
+})
+
+const five = () => ({
+  ...(() => ({
+    ...tagged(() => ({
+      ...string("five")
+    }), () => ({
+      ...int(5)
+    }))
+  }))()
+})
+
+const app = () => ({
+  ...seq(() => ({
+    ...five()
+  }), () => ({
+    ...five().tag()
+  }))
+})
+
+console.log(app().$_datarize())
+```
+</details>
+
+**Output**
+```
+$ ts-node src/index.ts test.eo && node test.js
+[5, "five"]
+```
+-----
+**EOLANG code #2**
+```eolang
+false > first
+first.or true > second
+
+[] > ifExample
+  second.if "yes" "no" > @
+
+ifExample > app
+```
+
+<details>
+<summary> JS generated `code` </summary>
+
+```
+const {int, float, boolTrue, boolFalse, string, seq} = require('./eolib')
+
+const first = () => ({
+    ...boolFalse()
+})
+
+const second = () => ({
+    ...first().or(() => ({
+        ...boolTrue()
+    }))
+})
+
+const ifExample = () => ({
+    ...(() => ({
+        ...second().if(() => ({
+            ...string("yes")
+        }), () => ({
+            ...string("no")
+        }))
+    }))()
+})
+
+const app = () => ({
+    ...ifExample()
+})
+
+console.log(app().$_datarize())
+```
+</details>
+
+**Output**
+```
+$ ts-node src/index.ts test.eo && node test.js                                                                                       5s 04:52:34
+yes
+```
+
+----
+**EOLANG code #3**
+```eolang
+5 > five
+  $.add > doubled
+    $
+
+seq > app
+  five
+  five.doubled
+```
+
+<details>
+<summary> JS generated `code` </summary>
+
+```
+const {int, float, boolTrue, boolFalse, string, seq} = require('./eolib')
+
+const five = () => ({
+    ...int(5),
+    doubled: () => ({
+        ...five().add(() => ({
+            ...five()
+        }))
+    })
+})
+
+const app = () => ({
+    ...seq(() => ({
+        ...five()
+    }), () => ({
+        ...five().doubled()
+    }))
+})
+
+console.log(app().$_datarize())
+```
+</details>
+
+**Output**
+```eolang
+$ ts-node src/index.ts test.eo && node test.js                                                                                       5s 04:52:34
+[5,10]
+```
+
+----
+**EOLANG code #4**
+```eolang
+"Seven plus two is " > beginning
+7.add 2 > sevenPlusTwo
+sevenPlusTwo.eq 10 > sevenPlusTwoIsTen
+
+[] > app
+  if. > @
+    sevenPlusTwoIsTen
+    beginning.add "ten"
+    beginning.add "NOT ten"
+```
+
+<details>
+<summary> JS generated `code` </summary>
+
+```
+const {int, float, boolTrue, boolFalse, string, seq} = require('./eolib')
+
+const beginning = () => ({
+  ...string("Seven plus two is ")
+})
+
+const sevenPlusTwo = () => ({
+  ...int(7).add(() => ({
+    ...int(2)
+  }))
+})
+
+const sevenPlusTwoIsTen = () => ({
+  ...sevenPlusTwo().eq(() => ({
+    ...int(10)
+  }))
+})
+
+const app = () => ({
+  ...(() => ({
+    ...sevenPlusTwoIsTen().if(() => ({
+      ...beginning().add(() => ({
+        ...string("ten")
+      }))
+    }), () => ({
+      ...beginning().add(() => ({
+        ...string("NOT ten")
+      }))
+    }))
+  }))()
+})
+
+console.log(app().$_datarize())
+```
+</details>
+
+**Output**
+```eolang
+$ ts-node src/index.ts test.eo && node test.js                                                                                       5s 04:52:34
+Seven plus two is NOT ten
+```
+
