@@ -1,27 +1,30 @@
-const { int, float } = require('./eolib')
+const { int, float, boolTrue, boolFalse, string, seq } = require('./eolib')
+
+const tagged = (t, _decoratee) => ({
+...(() => ({
+..._decoratee()
+}))(),
+tag: () => ({
+...t()
+})
+})
 
 const five = () => ({
+...(() => ({
+...tagged(() => ({
+...string("five")
+}),() => ({
 ...int(5)
-})
-
-const seven = () => ({
-...int(7)
-})
-
-const sum = () => ({
-...five().add(() => ({
-...seven()
-})),
-first: () => ({
-...int(5)
-}),
-second: () => ({
-...seven()
-})
+}))
+}))()
 })
 
 const app = () => ({
-...sum().second()
+...seq(() => ({
+...five()
+}),() => ({
+...five().tag()
+}))
 })
 
 console.log(app().$_datarize())

@@ -4,7 +4,7 @@ export const makeJsScript = (jsObjects: string[]) => {
 
   jsScript += jsObjects.join('\n\n')
 
-  jsScript += '\n\nconsole.log(app().$_datarize())'
+  jsScript += '\n\nconsole.log(app().$_datarize())\n'
 
   return jsScript
 }

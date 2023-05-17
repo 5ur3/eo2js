@@ -1,9 +1,11 @@
-5 > five
-7 > seven
+[t @] > tagged
+  t > tag
 
-five.add > sum
-  seven
-  5 > first
-  seven > second
+[] > five
+  tagged > @
+    "five"
+    5
 
-sum.second > app
+seq > app
+  five
+  five.tag
