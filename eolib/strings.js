@@ -1,11 +1,9 @@
 const {int} = require('./numbers')
-const {bool} = require('./booleans');
 const string = (value) => ({
     $_value: () => value,
     $_datarize: () => value.toString(),
 
-    len: () => int(value.length),
-    isEmpty: () => bool(value.isEmpty()),
+    length: () => int(value.length),
     add: (obj) => string(value + obj().$_value()),
 })
 
