@@ -40,7 +40,7 @@ const parseValue = (base: string, value: string): number | string | boolean => {
       return parseInt(value.replace(/ /g, ''), 16)
 
     case 'string':
-      return value.split(' ').map(hex => String.fromCharCode(parseInt(hex, 16))).join('');
+      return '"' + value.split(' ').map(hex => String.fromCharCode(parseInt(hex, 16))).join('') + '"';
 
     default:
       return ''

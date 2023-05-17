@@ -1,4 +1,5 @@
 module.exports = {
   ...require('./numbers'),
-  ...require('./booleans')
+  ...require('./booleans'),
+  ...require('./strings')
 }
