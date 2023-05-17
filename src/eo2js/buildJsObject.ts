@@ -7,12 +7,12 @@ export const buildJsObject = (object: ParsedObject): string => {
     jsObject += `const ${object.name} = `
   }
 
-  jsObject += representObject(object)
+  jsObject += representObject(object, object.name)
 
   return jsObject
 }
 
-const representObject = (object: ParsedObject): string => {
+const representObject = (object: ParsedObject, selfName: string): string => {
   let jsObject = ''
 
   if (object.type === ParsedObjectType.abstract) {
@@ -40,14 +40,14 @@ const representObject = (object: ParsedObject): string => {
 
   const jsChildren: string[] = []
   if (object.type === ParsedObjectType.closed) {
-    jsChildren.push(`...${makeBaseCall(object)}`)
+    jsChildren.push(`...${makeBaseCall(object, selfName)}`)
   }
   const children = object.children.filter(child => child.name)
   for (const child of children) {
     if (child.name === '@') {
-      jsChildren.push(`...(${representObject(child)})()`)
+      jsChildren.push(`...(${representObject(child, selfName)})()`)
     } else {
-      jsChildren.push(`${child.name!}: ${representObject(child)}`)
+      jsChildren.push(`${child.name!}: ${representObject(child, selfName)}`)
     }
   }
 
@@ -57,13 +57,13 @@ const representObject = (object: ParsedObject): string => {
   return jsObject
 }
 
-const makeBaseCall = (object: ParsedObject & { type: ParsedObjectType.closed }): string => {
+const makeBaseCall = (object: ParsedObject & { type: ParsedObjectType.closed }, selfName: string): string => {
   if (!object.value) {
     const args = object.children.filter(child => !child.name)
-    return `${object.base}(${args.map(representObject)})`
+    return `${object.base.replace(/\$/g, selfName)}(${args.map(a => representObject(a, selfName))})`
   }
 
-  return `${object.base}(${object.value})`
+  return `${object.base.replace(/\$/g, selfName)}(${object.value})`
 }
 
 const makeArgs = (args: string[]): string =>
