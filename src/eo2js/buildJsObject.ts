@@ -19,11 +19,11 @@ const representObject = (object: ParsedObject, selfName: string): string => {
     const args = object.args.map(a => a.name)
     for (let i = 0; i < args.length; i++) {
       if (args[i] === '@') {
-        args[i] = '$_decoratee'
+        args[i] = '_decoratee'
         object.children.splice(0, 0, {
           type: ParsedObjectType.closed,
           children: [],
-          base: '$_decoratee',
+          base: '_decoratee',
           name: '@'
         })
         break
