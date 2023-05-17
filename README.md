@@ -4,7 +4,7 @@
 
 Transpiler is a type of translator that takes the source code of a program written in a programming language as its input and produces an equivalent source code in the same or a different programming language.
 
-We have made an analogue to https://github.com/objectionary/eo2py transpiler. But it translates EOLANG code into JavaScript.
+This project transpiles EOlang to JavaScript
 
 ## How to use:
 
