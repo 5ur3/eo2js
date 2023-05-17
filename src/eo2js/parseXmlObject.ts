@@ -27,7 +27,7 @@ export const parseXmlObject = (object: any): ParsedObject => {
   }
 }
 
-const parseValue = (base: string, value: string): number | string | boolean => {
+export const parseValue = (base: string, value: string): number | string | boolean => {
   switch (base) {
     case 'float':
       const hexValues = value.split(' ');

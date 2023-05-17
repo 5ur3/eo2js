@@ -1,5 +1,5 @@
 import { ParsedObject, ParsedObjectType } from './ParsedObject'
-import { parseXmlObject } from './parseXmlObject'
+import { parseValue, parseXmlObject } from './parseXmlObject'
 
 export const buildParsedObject = (xmlObject: any): ParsedObject => {
   const base = parseXmlObject(xmlObject)
@@ -18,7 +18,7 @@ export const buildParsedObject = (xmlObject: any): ParsedObject => {
   }
 
   if (base.type === ParsedObjectType.closed && base.base.charAt(0) == '.') {
-    base.base = children[0].base + base.base
+    base.base = `${children[0].base}(${children[0].value ? parseValue(children[0].base, children[0].value) : ''})` + base.base
     childrenStartIndex = 1
   }
 
