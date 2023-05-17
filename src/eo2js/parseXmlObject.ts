@@ -37,7 +37,13 @@ export const parseValue = (base: string, value: string): number | string | boole
       return dataView.getFloat64(0)
 
     case 'int':
-      return parseInt(value.replace(/ /g, ''), 16)
+      const hexValue = value.replace(/ /g, '');
+      const bigintValue = BigInt(`0x${hexValue}`);
+
+      const signBit = bigintValue & BigInt(0x8000000000000000); // Mask for sign bit
+      const isNegative = (signBit !== BigInt(0))
+
+      return Number(bigintValue - (isNegative ? BigInt(0x10000000000000000) : BigInt(0)));
 
     case 'string':
       return '"' + value.split(' ').map(hex => String.fromCharCode(parseInt(hex, 16))).join('') + '"';
