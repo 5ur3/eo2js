@@ -2,9 +2,9 @@
 
 ## Description
 
-Transpiler is a type of translator that takes the source code of a program written in a programming language as its input and produces an equivalent source code in the same or a different programming language.
+Transpiler is a type of translator that takes the source code of a program written in a programming language as its input and produces an equivalent source code in the same or a different programming language.
 
-We have made an analogue to https://github.com/objectionary/eo2py transpiler. But it translate EOLANG code into JavaScript.
+We have made an analogue to https://github.com/objectionary/eo2py transpiler. But it translates EOLANG code into JavaScript.
 
 ## How to use:
 
@@ -43,7 +43,7 @@ We have made an analogue to https://github.com/objectionary/eo2py transpiler. Bu
     - .if
     - .and | .or
     - .not
-- num
+- num: int | float
     - arithmetics: .add | .sub | .mul | .div
     - comparisons: .lt | .lte | .gt | .gte | .eq
     - .neg
