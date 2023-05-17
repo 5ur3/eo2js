@@ -14,6 +14,8 @@ const num = (value) => ({
   gt: (obj) => bool(value > obj().$_value()),
   gte: (obj) => bool(value >= obj().$_value()),
   eq: (obj) => bool(value === obj().$_value()),
+
+  neg: () => num(-value),
 })
 
 const float = num
